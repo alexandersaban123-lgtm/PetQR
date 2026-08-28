@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR de mi mascota - PetQR</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f5;
+            text-align: center;
+            margin: 0;
+        }
+
+        header {
+            background: #2e7d32;
+            color: white;
+            padding: 20px;
+        }
+
+        .contenedor {
+            max-width: 500px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px #ccc;
+        }
+
+        #qrcode {
+            margin: 25px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 17px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .codigo {
+            background: #f1f1f1;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🐾 PetQR</h1>
+</header>
+
+<div class="contenedor">
+
+    <h2>QR de mi mascota</h2>
+
+    <div id="nombre"></div>
+
+    <div id="qrcode"></div>
+
+    <p>Este será el código que colocaremos en la placa o collar.</p>
+
+    <div class="codigo" id="codigo"></div>
+
+    <button onclick="window.print()">
+        🖨️ Imprimir QR
+    </button>
+
+    <br>
+
+    <a href="perfil.html">
+        ← Volver al perfil
+    </a>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+
+const mascota = JSON.parse(localStorage.getItem("mascota"));
+
+if (mascota) {
+
+    document.getElementById("nombre").innerHTML =
+        "<h3>🐶 " + mascota.nombre + "</h3>";
+
+    // Identificador temporal de la mascota
+    const id = "PET-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+    document.getElementById("codigo").textContent = id;
+
+    new QRCode(document.getElementById("qrcode"), {
+        text: id,
+        width: 220,
+        height: 220
+    });
+
+} else {
+
+    document.querySelector(".contenedor").innerHTML =
+        "<h2>No hay ninguna mascota registrada.</h2>";
+}
+
+</script>
+
+</body>
+</html>

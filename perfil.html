@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Perfil de mascota - PetQR</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f5;
+            margin: 0;
+        }
+
+        header {
+            background: #2e7d32;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            max-width: 500px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px #ccc;
+        }
+
+        .foto {
+            width: 130px;
+            height: 130px;
+            background: #eee;
+            border-radius: 50%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .dato {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dato strong {
+            color: #2e7d32;
+        }
+
+        .boton {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: #2e7d32;
+            color: white;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
+            font-size: 17px;
+        }
+
+        .perdida {
+            background: #c62828;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🐾 PetQR</h1>
+</header>
+
+<div class="tarjeta">
+
+    <div id="alertaPerdida" class="perdida">
+        🚨 ¡ESTA MASCOTA ESTÁ PERDIDA!
+    </div>
+
+    <div class="foto">
+        🐶
+    </div>
+
+    <h2 id="nombre"></h2>
+
+    <div class="dato">
+        <strong>Raza:</strong>
+        <span id="raza"></span>
+    </div>
+
+    <div class="dato">
+        <strong>Edad:</strong>
+        <span id="edad"></span>
+    </div>
+
+    <div class="dato">
+        <strong>Sexo:</strong>
+        <span id="sexo"></span>
+    </div>
+
+    <div class="dato">
+        <strong>Características:</strong>
+        <span id="caracteristicas"></span>
+    </div>
+
+    <div class="dato">
+        <strong>Dueño:</strong>
+        <span id="dueno"></span>
+    </div>
+
+    <a id="llamar" class="boton">
+        📞 Contactar al dueño
+    </a>
+
+<a href="qr.html" class="boton">
+    🔳 Ver mi código QR
+</a>
+
+    <a href="index.html" class="boton">
+        ← Volver
+    </a>
+
+</div>
+
+<script>
+
+const datos = JSON.parse(localStorage.getItem("mascota"));
+
+if (datos) {
+
+    document.getElementById("nombre").textContent = datos.nombre;
+    document.getElementById("raza").textContent = datos.raza || "No especificada";
+    document.getElementById("edad").textContent = datos.edad || "No especificada";
+    document.getElementById("sexo").textContent = datos.sexo || "No especificado";
+    document.getElementById("caracteristicas").textContent =
+        datos.caracteristicas || "No especificadas";
+    document.getElementById("dueno").textContent = datos.dueno;
+
+    document.getElementById("llamar").href =
+        "tel:" + datos.telefono;
+
+} else {
+
+    document.querySelector(".tarjeta").innerHTML =
+        "<h2>No hay una mascota registrada.</h2>";
+
+}
+
+</script>
+
+</body>
+</html>
